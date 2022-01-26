@@ -1,0 +1,172 @@
+{% extends 'base.html' %}
+<!--#############-->
+
+{% block content %}
+<section class="py-5">
+    <div class="container-fluid px-5 my-5">
+        <div class="row gx-5">
+            <div class="col-lg-3 mb-5">
+                <div class="d-block align-items-center text-center mt-lg-5 mb-4">
+                    <img class="img-fluid rounded-circle" src="{{ profile.avatar.url }}" alt="..." />
+                    <div class="ms-3">
+                        <div class="fw-bold"> {{ profile.user.username|title }} </div>
+                        <div class="text-muted">{{ profile.skill|title}}</div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-lg-9">
+                <header class="mb-4">
+                    <!-- Post title-->
+                    <h1 class="fw-bolder mb-1">Welcome to my Shelf</h1>
+                    <!-- Post meta content-->
+                    <div class="text-muted fst-italic mb-2">January 1, 2021</div>
+                    <!-- Post categories-->
+                    <a class="badge bg-secondary text-decoration-none link-light" href="#!">Web Design</a>
+                    <a class="badge bg-secondary text-decoration-none link-light" href="#!">Freebies</a>
+                </header>
+                <!-- Product content-->
+                <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+
+                    {% for p in profile.user.products.all %} {% if p.unique %}
+                    <div class="col-lg-3 col-md-6 col-sm-12 mb-5 mb-5">
+                        <div class="card h-100">
+                            <!-- Product image-->
+                            <img class="card-img-top" src=" {{ p.image.url }} " alt="..." />
+                            <!-- Product details-->
+                            <div class="card-body p-4">
+                                <div class="text-center">
+                                    <!-- Product name-->
+                                    <!--h5 class="fw-bolder"> {{ p.name }} </h5-->
+                                    <!-- Product reviews-->
+                                    <div class="d-flex justify-content-center small text-warning mb-2">
+                                        <div class="bi-star-fill"></div>
+                                        <div class="bi-star-fill"></div>
+                                        <div class="bi-star-fill"></div>
+                                        <div class="bi-star-fill"></div>
+                                        <div class="bi-star-fill"></div>
+                                    </div>
+                                    <!-- Product price-->
+                                    ${{ p.price }}
+                                </div>
+                            </div>
+                            <!-- Product actions-->
+                            <div class="card-footer p-2 pt-0 border-top-0 bg-transparent">
+                                <div class="text-center"><a class="btn btn-outline-dark mt-auto" href=" {{ p.get_absolute_url }} ">View</a></div>
+                            </div>
+                        </div>
+                    </div>
+                    {% elif p.fancy %}
+                    <!-- Fancy Product -->
+                    <div class="col-lg-3 col-md-6 col-sm-12 mb-5 mb-5">
+                        <div class="card h-100">
+                            <!-- Product image-->
+                            <img class="card-img-top" src=" {{ p.image.url }} " alt="..." />
+                            <!-- Product details-->
+                            <div class="card-body p-4">
+                                <div class="text-center">
+                                    <!-- Product name-->
+                                    <!--h5 class="fw-bolder">{{ p.name }} </h5-->
+                                    <!-- Product price-->
+                                    ${{ p.price_rage_from }} - ${{ p.price_range_to }}
+                                </div>
+                            </div>
+                            <!-- Product actions-->
+                            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                                <div class="text-center"><a class="btn btn-outline-dark mt-auto" href=" {{ p.get_absolute_url }} ">View</a></div>
+                            </div>
+                        </div>
+                    </div>
+                    {% elif p.special %}
+                    <!-- Special Product -->
+                    <div class="col-lg-3 col-md-6 col-sm-12 mb-5 mb-5">
+                        <div class="card h-100">
+                            <!-- Sale badge-->
+                            <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">Sale</div>
+                            <!-- Product image-->
+                            <img class="card-img-top" src=" {{ p.image.url }} " alt="..." />
+                            <!-- Product details-->
+                            <div class="card-body p-4">
+                                <div class="text-center">
+                                    <!-- Product name-->
+                                    <!--h5 class="fw-bolder">{{ p.name }} </h5-->
+                                    <!-- Product reviews-->
+                                    <div class="d-flex justify-content-center small text-warning mb-2">
+                                        <div class="bi-star-fill"></div>
+                                        <div class="bi-star-fill"></div>
+                                        <div class="bi-star-fill"></div>
+                                        <div class="bi-star-fill"></div>
+                                        <div class="bi-star-fill"></div>
+                                    </div>
+                                    <!-- Product price-->
+                                    <span class="text-muted text-decoration-line-through">${{ p.price }} </span> ${{ p.sale_price }}
+                                </div>
+                            </div>
+                            <!-- Product actions-->
+                            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                                <div class="text-center"><a class="btn btn-outline-dark mt-auto" href=" {{ p.get_absolute_url }} ">view</a></div>
+                            </div>
+                        </div>
+                    </div>
+                    {% elif p.sale %}
+                    <!-- Sale Product -->
+                    <div class="col-lg-3 col-md-6 col-sm-12 mb-5 mb-5">
+                        <div class="card h-100">
+                            <!-- Sale badge-->
+                            <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">Sale</div>
+                            <!-- Product image-->
+                            <img class="card-img-top" src=" {{ p.image.url }} " alt="..." />
+                            <!-- Product details-->
+                            <div class="card-body p-4">
+                                <div class="text-center">
+                                    <!-- Product name-->
+                                    <!--h5 class="fw-bolder">{{ p.name }} </h5-->
+                                    <!-- Product price-->
+                                    <span class="text-muted text-decoration-line-through">${{ p.price }} </span> ${{ p.sale_price }}
+                                </div>
+                            </div>
+                            <!-- Product actions-->
+                            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                                <div class="text-center"><a class="btn btn-outline-dark mt-auto" href=" {{ p.get_absolute_url }} ">View</a></div>
+                            </div>
+                        </div>
+                    </div>
+                    {% else %}
+                    <!-- Popular Product -->
+                    <div class="col-lg-3 col-md-6 col-sm-12 mb-5 mb-5">
+                        <div class="card h-100">
+                            <!-- Product image-->
+                            <img class="card-img-top" src=" {{ p.image.url }} " alt="..." />
+                            <!-- Product details-->
+                            <div class="card-body p-4">
+                                <div class="text-center">
+                                    <!-- Product name-->
+                                    <!--h5 class="fw-bolder">{{ p.name }} </h5-->
+                                    <!-- Product reviews-->
+                                    <div class="d-flex justify-content-center small text-warning mb-2">
+                                        <div class="bi-star-fill"></div>
+                                        <div class="bi-star-fill"></div>
+                                        <div class="bi-star-fill"></div>
+                                        <div class="bi-star-fill"></div>
+                                        <div class="bi-star-fill"></div>
+                                    </div>
+                                    <!-- Product price-->
+                                    ${{ p.price }}
+                                </div>
+                            </div>
+                            <!-- Product actions-->
+                            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                                <div class="text-center"><a class="btn btn-outline-dark mt-auto" href=" {{ p.get_absolute_url }} ">View</a></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {% endif %} {% endfor %}
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock content %}

@@ -1,0 +1,140 @@
+<!-- Sidebar-->
+
+
+<div class="offcanvas offcanvas-start w-25 bg-dark" tabindex="-1" id="offcanvas" data-bs-keyboard="false" data-bs-backdrop="false">
+    <div class="offcanvas-header">
+        <h6 class="offcanvas-title d-none d-sm-block fw-bolder fs-3 text-light" id="offcanvas"><i class="bi bi-columns-gap"></i> {{ site_name|upper }}</h6>
+        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body px-0">
+        <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-start" id="menu">
+            {% if page_title == 'products' %}
+            <li class="nav-item" style="cursor: pointer;">
+                <div class="nav-link text-truncate text-warning" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    <i class="bi bi-search"></i>
+                    <span class="ms-1 d-none d-sm-inline">Search</span>
+                </div>
+            </li>
+
+            {% endif %}
+            <!---->
+            {% if request.user.is_authenticated %}
+            <li>
+                <a href="#submenu1" data-bs-toggle="collapse" class="nav-link text-truncate">
+                    <i class="fs-5 bi-speedometer2"></i><span class="ms-1 d-none d-sm-inline">Dashboard</span> </a>
+            </li>
+            <li>
+                <a href="#" class="nav-link text-truncate">
+                    <i class="fs-5 bi-table"></i><span class="ms-1 d-none d-sm-inline">Orders</span></a>
+            </li>
+
+            <li>
+                <a href="#" class="nav-link text-truncate">
+                    <i class="fs-5 bi-grid"></i><span class="ms-1 d-none d-sm-inline">My Products</span></a>
+            </li>
+            <li>
+                <a href="#" class="nav-link text-truncate">
+                    <i class="fs-5 bi-people"></i><span class="ms-1 d-none d-sm-inline">Customers</span> </a>
+            </li>
+            {% endif %}
+
+            <li class="dropdown">
+                <!---->
+                {% if request.user == profile.user %}
+                <!---->
+                <a href="#" class="nav-link dropdown-toggle  text-truncate" id="settings" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="bi bi-gear-fill"></i><span class="ms-1 d-none d-sm-inline">Edit</span>
+                </a>
+
+                <ul class="dropdown-menu text-small shadow" aria-labelledby="settings">
+                    <li>
+                        <a class="dropdown-item" href="{% url 'products:create_product' profile.slug %}">
+                            <i class="bi bi-bag-plus-fill"></i> Create Product
+                        </a>
+                    </li>
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
+                    <li>
+                        <a class="dropdown-item" href="{% url 'users:user_update' profile.slug %}">
+                            <i class="bi bi-person-lines-fill"></i> Edit Profile</a>
+                    </li>
+                    <!---->
+                </ul>
+                <!---->
+
+
+            </li>
+            {% endif %}
+            <li class="dropdown">
+                <a href="#" class="nav-link dropdown-toggle  text-truncate" id="account" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="bi bi-briefcase"></i></i><span class="ms-1 d-none d-sm-inline">Account</span>
+                </a>
+                <!---->
+                <ul class="dropdown-menu text-small shadow" aria-labelledby="account">
+                    <!---->
+                    {% if request.user.is_authenticated %}
+                    <!---->
+
+                    <li>
+                        <a class="dropdown-item" href="{% url 'users:user_detail' request.user.profile.slug %}">
+                            <i class="bi bi-person-circle"></i> Profile
+                        </a>
+                    </li>
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
+                    <li>
+                        <a class="dropdown-item" href="{% url 'accounts:logout' %}">
+                            <i class="bi bi-box-arrow-right"></i> Logout
+                        </a>
+                    </li>
+                    <!---->
+                    {% else %}
+                    <li>
+                        <a class="dropdown-item" href="{% url 'accounts:login' %}">
+                            <i class="bi bi-box-arrow-right"></i> Login
+                        </a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" href="{% url 'accounts:register' %}">
+                            <i class="bi bi-pencil-square"></i> Register
+                        </a>
+                    </li>
+
+                    <!---->
+                    {% endif %}
+                </ul>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Filter Products</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form method="get" class="p2">
+                <div class="modal-body">
+                    <div class="form-floating mb-1">
+                        <div class="fw-bolder text-dark">Name</div>
+                        <input class="form-control mb-2" type="text" name="name" id="id_name">
+                        <div class="fw-bolder text-dark">Min Price</div>
+                        <input class="form-control mb-2" type="text" name="price_min" id="id_price_0">
+                        <div class="fw-bolder text-dark">Max Price</div>
+                        <input class="form-control mb-2" type="text" name="price_max" id="id_price_1">
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-sm btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-sm btn-outline-primary">Save changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

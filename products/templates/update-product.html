@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+<!--#############-->
+
+{% block content %}
+
+<div class="container mb-5" style="margin-top: 100px;">
+    <form action="" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <!---->
+        {% for field in form %}
+        <div class="form-floating mb-3">
+            <div class="fw-bolder">{{field.label}}</div>
+            <!---->
+            {{ field }}
+        </div>
+        <!---->
+        {% endfor %}
+        <button class="btn btn-sm btn-outline-primary" type="submit">Update</button>
+    </form>
+</div>
+
+{% endblock content %}

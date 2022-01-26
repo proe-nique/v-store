@@ -1,0 +1,42 @@
+{% load cart_tag %}
+<!-- Top navigation-->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark border-bottom fixed-top">
+    <div class="container-fluid">
+        <!-- toggler -->
+        <button class="btn float-end" data-bs-toggle="offcanvas" data-bs-target="#offcanvas" role="button">
+            <i class="bi bi-arrow-right-square-fill text-light fs-3" data-bs-toggle="offcanvas" data-bs-target="#offcanvas"></i>
+        </button>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ms-auto mt-2 mt-lg-0">
+                <li class="nav-item"><a class="nav-link {% if request.path == '/' %}active {% endif %}" href=" {% url 'base:home' %} "><i class="bi bi-house"></i> Home</a></li>
+                <li class="nav-item"><a class="nav-link {% if request.path == '/about/' %}active {% endif %}" href=" {% url 'base:about' %} "><i class="bi bi-question-square"></i> About</a></li>
+                <li class="nav-item"><a class="nav-link {% if request.path == '/contact/' %}active {% endif %}" href=" {% url 'base:contact' %} "><i class="bi bi-envelope-check"></i> Contact</a></li>
+                <li class="nav-item"><a class="nav-link {% if request.path == '/faq/' %}active {% endif %}" href=" {% url 'base:faq' %} "><i class="bi bi-question-diamond"></i> Faq</a></li>
+                <li class="nav-item"><a class="nav-link {% if request.path == '/pricing/' %}active {% endif %}" href=" {% url 'base:pricing' %} "><i class="bi bi-cash-coin"></i> Pricing</a></li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle {% if request.path == '/products/all/' %}active {% endif %}" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="bi bi-shop"></i> Store</a>
+                    <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item {% if request.path == '/products/all/' %}active {% endif %} " href="{% url 'products:product_list' %}"><i class="fs-5 bi-grid"></i> All Products</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item {% if request.path == '/products/all/sale' %}active {% endif %}" href="#!"><i class="bi bi-bookmark-star"></i> On Sale</a>
+                        <a class="dropdown-item {% if request.path == '/products/all/popular' %}active {% endif %}" href="#!"><i class="bi bi-heart"></i> Popular Items</a>
+                        <a class="dropdown-item {% if request.path == '/products/all/new' %}active {% endif %}" href="#!"><i class="bi bi-clock"></i> New Arrivals</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item {% if request.path == '/products/categories/' %}active {% endif %}" href="#!"><i class="bi bi-boxes"></i> Categories</a>
+                    </div>
+                </li>
+
+                {% if request.user.is_authenticated %}
+                <li class="nav-item">
+                    <a class="nav-link btn btn-outline-light" href="{% url 'cart:cart-home' %}">
+                        <i class="bi-cart-fill me-1"></i> Cart
+                        <span class="badge badge-light">{{ request.user| cart_total }}</span>
+                    </a>
+                </li>
+                {% endif %}
+
+            </ul>
+        </div>
+    </div>
+</nav>
